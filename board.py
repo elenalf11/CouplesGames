@@ -4,7 +4,6 @@ Clase Board
 En esta clase estarán todos los métodos y atributos relacionados con los tableros de juego
 '''
 import random
-
 class Board:
 
     '''
@@ -20,7 +19,7 @@ class Board:
     def __init__(self, filas, columnas):
         self.filas = filas
         self.columnas = columnas
-        self.iconos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        self.iconos = ["\U0001F4BB", "\U00002708", "\U0001F37B", "\U0001F34F", "\U0001F525", "\U0001F981", "\U0001F430", "\U0001F369", "\U0001F680", "\U0001F381", "\U0000270F", "\U0001F4A1", "\U0001F4B0", "\U0001F60E", "\U0001F621"]
         self.tablero_jugable = []
         self.tablero = []
         self.parejas = (filas * columnas)//2
@@ -61,7 +60,7 @@ class Board:
     def imprimirTableroX(self):
         #Imprime la matriz fila a fila
         for i in range(0, self.filas):
-            print(self.tablero[i*self.columnas:(i+1)*self.columnas])
+            print(self.tablero[i*self.columnas:(i+1)*self.columnas]) #Esta manera imprime la matriz fila a fila, no me funciona de otra manera. La he tenido que buscar por Internet
 
     '''
     Metodo crearTableroIconos
@@ -76,8 +75,6 @@ class Board:
             for i in range(0, self.parejas):
                 tablero.extend([self.iconos[i], self.iconos[i]])
                 self.tablero_jugable = random.sample(tablero, len(tablero))
-            else:
-                print("Datos inválidos")
 
     '''
     Metodo imprimirTableroIconos
@@ -86,5 +83,4 @@ class Board:
     '''
     def imprimirTableroIconos(self):
          for i in range(0, self.filas):
-            print(self.tablero_jugable[i*self.columnas:(i+1)*self.columnas])
-       
+            print(self.tablero_jugable[i*self.columnas:(i+1)*self.columnas]) #Esta manera imprime la matriz fila a fila, no me funciona de otra manera. La he tenido que buscar por Internet

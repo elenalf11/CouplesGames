@@ -28,7 +28,7 @@ class Main:
         tablero.imprimirTableroX()
 
         print("El tablero con las parejas implementadas y descolocadas es: ")
-        tablero.imprimirTableroIconos
+        tablero.imprimirTableroIconos()
     else:
         print("Los datos introducidos son incorrectos, por favor vuelva a intentarlo con otros datos.")
 
