@@ -3,6 +3,7 @@ Clase Board
 
 En esta clase estarán todos los métodos y atributos relacionados con los tableros de juego
 '''
+import random
 
 class Board:
 
@@ -14,6 +15,7 @@ class Board:
     - Lista de iconos: es la lista que incluye todos los iconos que se van a emplear para buscar las parejas.
     - Lista de tablero jugable: es la lista en la que se encuentran todas las parejas de los iconos de manera descolocada.
     - Lista de tablero: es la lista en la que se encuentra "las cartas del revés" están representadas con una "X".
+    - Parejas: es el número real de parejas que hay en la partida
     '''
     def __init__(self, filas, columnas):
         self.filas = filas
@@ -21,6 +23,7 @@ class Board:
         self.iconos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         self.tablero_jugable = []
         self.tablero = []
+        self.parejas = (filas * columnas)//2
 
     '''
     Método checkTablero
@@ -32,7 +35,7 @@ class Board:
     '''
     def checkTablero(self):
         multiplicacion = self.filas * self.columnas
-        if((self.filas >= 2 and self.columnas >= 2) and (multiplicacion % 2 == 0)):
+        if((self.filas >= 2 and self.columnas >= 2) and (multiplicacion % 2 == 0) and (multiplicacion < 36)):
             return True
         else:
             return False
@@ -56,13 +59,32 @@ class Board:
     Este método imprime por consola el tablero de las "cartas del revés", el cual tiene en todas sus posiciones una "X".
     '''
     def imprimirTableroX(self):
+        #Imprime la matriz fila a fila
         for i in range(0, self.filas):
             print(self.tablero[i*self.columnas:(i+1)*self.columnas])
 
     '''
     Metodo crearTableroIconos
 
-    Este método crea el tablero que contiene todas las parejas descolocadas.
+    Este método crea el tablero que contiene todas las parejas descolocadas. 
+    Para "descolocar" las parejas he empleado el método sample(x, len(y)) de la biblioteca random, el cual crea una nueva
+    lista desordenada a partir de la original sin modificarla.
     '''
     def crearTableroIconos(self):
-        print()
+       if(self.checkTablero()):
+            tablero = []
+            for i in range(0, self.parejas):
+                tablero.extend([self.iconos[i], self.iconos[i]])
+                self.tablero_jugable = random.sample(tablero, len(tablero))
+            else:
+                print("Datos inválidos")
+
+    '''
+    Metodo imprimirTableroIconos
+
+    Este método imprime por consola el tablero que contiene todas las parejas.
+    '''
+    def imprimirTableroIconos(self):
+         for i in range(0, self.filas):
+            print(self.tablero_jugable[i*self.columnas:(i+1)*self.columnas])
+       
