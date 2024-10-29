@@ -30,10 +30,10 @@ class Main:
         print("El tablero con las parejas implementadas y descolocadas es: ")
         tablero.imprimirTableroIconos()
     else:
-        print("Los datos introducidos son incorrectos, por favor vuelva a intentarlo con otros datos.")
+        
 
         while(tablero.checkTablero() == False ):
-
+            print("Los datos introducidos son incorrectos, por favor vuelva a intentarlo con otros datos.")
             filas = int(input(f"{name}, dime cuántas filas quieres que haya en tu tablero: "))
             columnas = int(input(f"{name}, ahora cuántas columnas quieres que haya: "))
             tablero = Board(filas, columnas)

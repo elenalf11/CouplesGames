@@ -19,7 +19,7 @@ class Board:
     def __init__(self, filas, columnas):
         self.filas = filas
         self.columnas = columnas
-        self.iconos = ["\U0001F4BB", "\U00002708", "\U0001F37B", "\U0001F34F", "\U0001F525", "\U0001F981", "\U0001F430", "\U0001F369", "\U0001F680", "\U0001F381", "\U0000270F", "\U0001F4A1", "\U0001F4B0", "\U0001F60E", "\U0001F621"]
+        self.iconos = ["🥥", "💷", "💧", "🎭", "🎅", "🏀", "🍏", "🐨", "🍀", "🌺", "🐸", "🦁", "👁️", "🧠", "🦴"]
         self.tablero_jugable = []
         self.tablero = []
         self.parejas = (filas * columnas)//2
