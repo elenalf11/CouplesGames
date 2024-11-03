@@ -25,9 +25,9 @@ class Board:
         self.parejas = (filas * columnas)//2
 
     '''
-    Método checkTablero
+    Función checkTablero
 
-    Este método comprueba que el número de filas y columnas como mínimo sea 2. También comprueba si el tablero
+    Comprueba que el número de filas y columnas como mínimo sea 2. También comprueba si el tablero
     que el usuario quiere crear sea número par, para poder crear las parejas correctamente.
 
     Es una función booleana. Devuelve True si se cumple lo anteriormente dicho, sino, devuelve False.
@@ -40,32 +40,28 @@ class Board:
             return False
     
     '''
-    Metodo crearTableroX
+    Función crearTableroX
 
-    Este método crea el tablero de las "cartas del revés". Es decir, rellena todas las posiciones con una "X".
+    Crea el tablero de las "cartas del revés". Es decir, rellena todas las posiciones con una "X".
     '''
     def crearTableroX(self):
         if(self.checkTablero()):
-            for i in range(0,self.filas):
-                for j in range(0, self.columnas):
-                    self.tablero.append("X")
-        else:
-            print("Datos inválidos")
+            self.tablero = [["X" for _ in range(self.columnas)] for _ in range(self.filas)]
+            return self.tablero
     
     '''
-    Metodo imprimirTableroX
+    Función imprimirTableroX
 
-    Este método imprime por consola el tablero de las "cartas del revés", el cual tiene en todas sus posiciones una "X".
+    Imprime por consola el tablero de las "cartas del revés", el cual tiene en todas sus posiciones una "X".
     '''
     def imprimirTableroX(self):
-        #Imprime la matriz fila a fila
-        for i in range(0, self.filas):
-            print(self.tablero[i*self.columnas:(i+1)*self.columnas]) #Esta manera imprime la matriz fila a fila, no me funciona de otra manera. La he tenido que buscar por Internet
+       for fila in self.tablero:
+           print(" ".join(fila))
 
     '''
-    Metodo crearTableroIconos
+    Función crearTableroIconos
 
-    Este método crea el tablero que contiene todas las parejas descolocadas. 
+    Crea el tablero que contiene todas las parejas descolocadas. 
     Para "descolocar" las parejas he empleado el método sample(x, len(y)) de la biblioteca random, el cual crea una nueva
     lista desordenada a partir de la original sin modificarla.
     '''
@@ -74,13 +70,68 @@ class Board:
             tablero = []
             for i in range(0, self.parejas):
                 tablero.extend([self.iconos[i], self.iconos[i]])
-                self.tablero_jugable = random.sample(tablero, len(tablero))
+                tablero_mezclado = random.sample(tablero, len(tablero))
+
+                self.tablero_jugable = [tablero_mezclado[i:i + self.columnas] for i in range(0, len(tablero_mezclado), self.columnas)]
+            return self.tablero_jugable
+
 
     '''
-    Metodo imprimirTableroIconos
+    Función imprimirTableroIconos
 
-    Este método imprime por consola el tablero que contiene todas las parejas.
+    Imprime por consola el tablero que contiene todas las parejas.
     '''
     def imprimirTableroIconos(self):
-         for i in range(0, self.filas):
-            print(self.tablero_jugable[i*self.columnas:(i+1)*self.columnas]) #Esta manera imprime la matriz fila a fila, no me funciona de otra manera. La he tenido que buscar por Internet
+        for fila in self.tablero_jugable:
+            print(" ".join(fila))
+    
+    '''
+    Función maxParejas
+
+    Define cuál es el número de parejas que ha de conseguir un jugador para ganar la partida.
+
+    Return: el número de parejas que ha de conseguir un jugador para ganar la partida.
+    '''
+    def maxParejas(self):
+        return self.parejas//2 + 1
+    
+    '''
+    Función muestraParejas
+
+    Muestra las parejas del tablero, con las posiciones que diga el usuario.
+
+    Parámetros:
+    - posicion: Es la tupla de la posición elegida por el usuario, (fila, columna)
+    '''
+    def muestraParejas(self, posicion):
+        self.tablero[posicion[0]][posicion[1]] = self.tablero_jugable[posicion[0]][posicion[1]]
+
+    '''
+    Función getTablero
+
+    Devuelve el tablero con las parejas.
+
+    Return: el tablero que contiene las parejas
+    '''   
+    def getTablero(self):
+        return self.tablero_jugable
+    
+    def existePareja(self, posicion):
+        if(self.tablero[posicion[0]][posicion[1]] != "X"):
+            return True
+        else:
+            return False
+        
+    def comprobarPareja(self, posicion1, posicion2):
+        if(posicion1 != posicion2):
+            if(self.tablero[posicion1[0]][posicion1[1]] == self.tablero[posicion2[0]][posicion2[1]]):
+                return True
+            else:
+                self.quitarPareja(posicion1, posicion2)
+                return False
+        return False
+       
+    
+    def quitarPareja(self, posicion1, posicion2):
+        self.tablero[posicion1[0]][posicion1[1]] = "X"
+        self.tablero[posicion2[0]][posicion2[1]] = "X"
