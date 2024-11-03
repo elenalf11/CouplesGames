@@ -56,7 +56,7 @@ class Board:
     '''
     def imprimirTableroX(self):
        for fila in self.tablero:
-           print(" ".join(fila))
+           print("   ".join(fila))
 
     '''
     Función crearTableroIconos
@@ -86,14 +86,14 @@ class Board:
             print(" ".join(fila))
     
     '''
-    Función maxParejas
+    Función maxPuntos
 
-    Define cuál es el número de parejas que ha de conseguir un jugador para ganar la partida.
+    Define cuál es el número de puntos que ha de conseguir un jugador para ganar la partida.
 
-    Return: el número de parejas que ha de conseguir un jugador para ganar la partida.
+    Return: el número de puntos que ha de conseguir un jugador para ganar la partida.
     '''
-    def maxParejas(self):
-        return self.parejas//2 + 1
+    def getParejas(self):
+        return self.parejas
     
     '''
     Función muestraParejas
@@ -103,8 +103,8 @@ class Board:
     Parámetros:
     - posicion: Es la tupla de la posición elegida por el usuario, (fila, columna)
     '''
-    def muestraParejas(self, posicion):
-        self.tablero[posicion[0]][posicion[1]] = self.tablero_jugable[posicion[0]][posicion[1]]
+    def muestraParejas(self, posicion1, posicion2):
+        self.tablero[posicion1][posicion2] = self.tablero_jugable[posicion1][posicion2]
 
     '''
     Función getTablero
@@ -116,22 +116,38 @@ class Board:
     def getTablero(self):
         return self.tablero_jugable
     
-    def existePareja(self, posicion):
-        if(self.tablero[posicion[0]][posicion[1]] != "X"):
+    '''
+    Función existePareja
+
+    Comprueba que la celda seleccionada sea un icono o una X.
+
+    Es una función booleana, si en esa celda hay un icono se retorna True, de lo contrario, devuelve False
+    '''
+    def existeIcono(self, posicion1, posicion2):
+        if(self.tablero[posicion1][posicion2] != "X"):
             return True
         else:
             return False
-        
-    def comprobarPareja(self, posicion1, posicion2):
-        if(posicion1 != posicion2):
-            if(self.tablero[posicion1[0]][posicion1[1]] == self.tablero[posicion2[0]][posicion2[1]]):
-                return True
-            else:
-                self.quitarPareja(posicion1, posicion2)
-                return False
-        return False
-       
     
-    def quitarPareja(self, posicion1, posicion2):
-        self.tablero[posicion1[0]][posicion1[1]] = "X"
-        self.tablero[posicion2[0]][posicion2[1]] = "X"
+    '''
+    Función comprobarPareja
+
+    Comprueba que dos celdas contengan el mismo icono
+
+    Es una función booleana, si las dos celdas coinciden se retorna True, de lo contrario devuelve False y se cubre la pareja incorrecta.
+    '''
+    def comprobarPareja(self, posicion1, posicion2, posicion3, posicion4):
+        if(self.tablero[posicion1][posicion2] == self.tablero[posicion3][posicion4]):
+            return True
+        else:
+            self.quitarPareja(posicion1, posicion2, posicion3, posicion4)
+            return False
+       
+    '''
+    Función quitarPareja
+
+    Oculta las posiciones de los iconos, cuando la pareja no se ha acertado.
+    '''
+    def quitarPareja(self, posicion1, posicion2, posicion3, posicion4):
+        self.tablero[posicion1][posicion2] = "X"
+        self.tablero[posicion3][posicion4] = "X"

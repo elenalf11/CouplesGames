@@ -59,50 +59,83 @@ class Engine:
     '''
     def play(self, player1:Player, player2:Player):
         posiciones = []
-        perdido = False
+        acabar = False
+        contador = 0
         cambioJugador = True
         self.board.crearTableroX()
         self.board.crearTableroIconos()
 
-        while(perdido == False):
+        while(acabar == False):
 
             if(cambioJugador == True):
-                print(f"{player1.getName()} es tu turno")
+                print(f"{player1.getName()} es tu turno. Puntuación: {player1.getPoints()} puntos")
             else:
-                print(f"{player2.getName()} es tu turno")
+                print(f"{player2.getName()} es tu turno. Puntuación: {player2.getPoints()} puntos")
 
-            for i in range(2):
-                self.board.imprimirTableroX()
-
-                revelaFila = int(input("Dime que fila quieres revelar: ")) -1
-                revelaColumna = int(input("Dime que columna quieres revelar: ")) -1
-                if((revelaFila >= 0 and revelaFila <= len(self.board.getTablero())) and (revelaColumna >= 0 and revelaColumna <= len(self.board.getTablero()[0])) and self.board.existePareja((revelaFila, revelaColumna)) == False):
-                    posiciones.append((revelaFila, revelaColumna))
-                    self.board.muestraParejas((revelaFila, revelaColumna))
+            self.board.imprimirTableroX()
+            ok1 = False
+            while (ok1 == False):
+                try:
+                    p1F1 = int(input("Dime que fila quieres revelar: ")) -1
+                    p1C1 = int(input("Dime que columna quieres revelar: ")) -1
+                    if(((p1F1 < 0 or p1F1 > len(self.board.getTablero())) or (p1C1 < 0 or p1C1 > len(self.board.getTablero()[0]))) or self.board.existeIcono(p1F1, p1C1)):
+                        print("Datos incorrectos, vuelve a introducirlos")
+                        ok1 = False
+                        continue
+                        
+                    else:
+                        self.board.muestraParejas(p1F1, p1C1)
+                        self.board.imprimirTableroX()
+                        ok1 = True
+                except:
+                    print("Los datos no son correctos")
                 
-            if(self.board.comprobarPareja(posiciones[0], posiciones[1])):
-                if (cambioJugador == True):
-                    print(f"¡Enhorabuena! {player1.getName()} has encontrado una pareja, +2 puntos. Puntuación actual: {player1.getPoints()}")
-                    player1.sumaPuntos()
-                else:
-                    print(f"¡Enhorabuena! {player2.getName()} has encontrado una pareja, +2 puntos. Puntuación actual: {player2.getPoints()}")
-                    player2.sumaPuntos()
-            else:
-                    
+            
+            ok2 = False
+            while(ok2 == False):
+                try:
+                    p1F2 = int(input("Dime que fila quieres revelar: ")) -1
+                    p1C2 = int(input("Dime que columna quieres revelar: ")) -1
+                    if(((p1F2 < 0 or p1F2 > len(self.board.getTablero())) or (p1C2 < 0 or p1C2 > len(self.board.getTablero()[0]))) or self.board.existeIcono(p1F2, p1C2)):
+                        print("Datos incorrectos, vuelve a introducirlos")
+                        ok2 = False
+                        continue
+                        
+                    else:
+                        self.board.muestraParejas(p1F2, p1C2)
+                        self.board.imprimirTableroX()
+                        ok2 = True
+                except:
+                    print("Los datos no son correctos")
+                
+
+            if(self.board.comprobarPareja(p1F1, p1C1, p1F2, p1C2) == True):
                 if(cambioJugador == True):
-                    print(f"¡Oh no! {player1.getName()} has fallado la pareja, has perdido el turno.")
+                    print(f"¡Enhorabuena! {player1.getName()}, has conseguido una pareja. +2 puntos")
+                    player1.sumaPuntos()
+                    contador += 1
+                else:
+                    print(f"¡Enhorabuena! {player2.getName()}, has conseguido una pareja. +2 puntos")
+                    player2.sumaPuntos()
+                    contador += 1
+            else:
+                if(cambioJugador == True):
+                    print(f"Lo siento {player1.getName()}, no has conseguido la pareja. Pierdes tu turno")
                     cambioJugador = False
                 else:
-                    print(f"¡Oh no! {player2.getName()} has fallado la pareja, has perdido el turno.")
+                    print(f"Lo siento {player2.getName()}, no has conseguido la pareja. Pierdes tu turno")
                     cambioJugador = True
-                    
 
+            if(contador == self.board.getParejas()):
+                if(player1.getPoints() > player2.getPoints()):
+                    print(f"¡Enhorabuena {player1.getName()}! Has ganado la partida. Has conseguido un total de {player1.getPoints()} puntos")
+                    acabar = True
+                elif(player2.getPoints() > player1.getPoints()):
+                    print(f"¡Enhorabuena {player2.getName()}! Has ganado la partida. Has conseguido un total de {player2.getPoints()} puntos")
+                    acabar = True
+                elif(player1.getPoints() == player2.getPoints()):
+                    print(f"¡Eso si que no me lo esperaba! {player1.getName()} y {player2.getName()} habéis empatado con {player1.getPoints()} puntos y {player2.getPoints()} puntos")
+                    acabar = True
             
             
             
-        
-
-
-        
-
-    
