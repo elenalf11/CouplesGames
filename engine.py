@@ -125,9 +125,9 @@ class Engine:
         while(acabar == False):
             #Aquí se maneja el flujo del cambio de jugador
             if(cambioJugador == True):
-                print(f"{player1.getName()} es tu turno. Puntuación: {player1.getPoints()} puntos")
+                print(f"{player1.getName()} es tu turno. Puntuación: {player1.getPoints()} puntos. Parejas: {player1.getParejas()} parejas")
             else:
-                print(f"{player2.getName()} es tu turno. Puntuación: {player2.getPoints()} puntos")
+                print(f"{player2.getName()} es tu turno. Puntuación: {player2.getPoints()} puntos. Parejas: {player2.getParejas()} parejas")
 
             self.board.imprimirTableroX()
             ok1 = False
@@ -188,6 +188,8 @@ class Engine:
                     print(f"¡Enhorabuena! {player1.getName()}, has conseguido una pareja. +2 puntos")
                     #Se le suman 2 puntos a su cuenta personal
                     player1.sumaPuntos()
+                    #Se le suma 1 pareja a su cuenta personal
+                    player1.sumaParejas()
                     #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
                     contador += 1
                     #"Limpia" la consola de código para que no se pueda hacer trampas
@@ -198,6 +200,8 @@ class Engine:
                     print(f"¡Enhorabuena! {player2.getName()}, has conseguido una pareja. +2 puntos")
                     #Se le suman 2 puntos a su cuenta personal
                     player2.sumaPuntos()
+                    #Se le suma 1 pareja a su cuenta personal
+                    player2.sumaParejas()
                     #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
                     contador += 1
                     #"Limpia" la consola de código para que no se pueda hacer trampas
@@ -225,18 +229,18 @@ class Engine:
             if(contador == self.board.getParejas()):
                 #El jugador 1 tiene más puntos que el jugador 2. Gana el jugador 1
                 if(player1.getPoints() > player2.getPoints()):
-                    print(f"¡Enhorabuena {player1.getName()}! Has ganado la partida. Has conseguido un total de {player1.getPoints()} puntos")
+                    print(f"¡Enhorabuena {player1.getName()}! Has ganado la partida. Has conseguido un total de {player1.getPoints()} puntos (El equivalente a {player1.getParejas()} parejas). En cambio {player2.getName()} ha conseguido solo {player2.getPoints()} puntos (El equivalente a {player2.getParejas()} parejas)")
                     #Se finaliza el juego
                     acabar = True
 
                 #El jugador 2 tiene más puntos que el jugador 1. Gana el jugador 2
                 elif(player2.getPoints() > player1.getPoints()):
-                    print(f"¡Enhorabuena {player2.getName()}! Has ganado la partida. Has conseguido un total de {player2.getPoints()} puntos")
+                    print(f"¡Enhorabuena {player2.getName()}! Has ganado la partida. Has conseguido un total de {player2.getPoints()} puntos (El equivalente a {player2.getParejas()} parejas). En cambio {player1.getName()} ha conseguido solo {player1.getPoints()} puntos (El equivalente a {player1.getParejas()} parejas)")
                     #Se finaliza el juego
                     acabar = True
 
                 #El jugador 1 y el jugador 2 han conseguido los mismos puntos. Hay un empate.
                 elif(player1.getPoints() == player2.getPoints()):
-                    print(f"¡Eso si que no me lo esperaba! {player1.getName()} y {player2.getName()} habéis empatado con {player1.getPoints()} puntos y {player2.getPoints()} puntos")
+                    print(f"¡Eso si que no me lo esperaba! {player1.getName()} y {player2.getName()} habéis empatado con {player1.getPoints()} puntos (El equivalente a {player1.getParejas} parejas) y {player2.getPoints()} puntos (El equivalente a {player2.getParejas()} parejas)")
                     #Se finaliza el juego
                     acabar = True
