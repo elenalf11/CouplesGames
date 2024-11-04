@@ -7,11 +7,15 @@ En esta clase estarán todos los métodos y atributos relacionados sobre los jug
 class Player:
 
     '''
-    Construtura de la clase Player. Parámetros: nombre del jugador que introduce el usuario.
+    Construtura de la clase Player. 
+    
+    Parámetros: 
+    - nombre: es el nombre que introduce el usuario.
 
     Atributos:
-    - Nombre: es el nombre del jugador 
-    - Points: son los puntos que obtiene el jugador durante el juego, se inicia en 0 puntos
+
+    - nombre: es el nombre del jugador 
+    - points: son los puntos que obtiene el jugador durante el juego, se inicia en 0 puntos
     '''
     def __init__(self, name):
         self.nombre = name
@@ -23,6 +27,7 @@ class Player:
     Suma 2 puntos al jugador, se activará este método cuando el jugador o CPU adivine una pareja en el juego
     '''
     def sumaPuntos(self):
+        #Se suman dos puntos al jugador 
         self.points += 2
     
     '''
@@ -33,6 +38,7 @@ class Player:
     Return: nombre del jugador
     '''
     def getName(self):
+        #Devuelve el nombre del jugador
         return self.nombre
     
     '''
@@ -43,5 +49,5 @@ class Player:
     Return: puntuación del jugador
     '''
     def getPoints(self):
+        #Devuelve los puntos del jugador
         return self.points
-
