@@ -136,10 +136,10 @@ class Engine:
                 #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
                 try:
                     #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
-                    p1F1 = int(input("Dime que fila quieres revelar: ")) -1
-                    p1C1 = int(input("Dime que columna quieres revelar: ")) -1
+                    F1 = int(input("Dime que fila quieres revelar: ")) -1
+                    C1 = int(input("Dime que columna quieres revelar: ")) -1
                     #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
-                    if(((p1F1 < 0 or p1F1 > len(self.board.getTablero())) or (p1C1 < 0 or p1C1 > len(self.board.getTablero()[0]))) or self.board.existeIcono(p1F1, p1C1)):
+                    if(((F1 < 0 or F1 > len(self.board.getTablero())) or (C1 < 0 or C1 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F1, C1)):
                         print("Datos incorrectos, vuelve a introducirlos")
                         ok1 = False
                         #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
@@ -147,7 +147,7 @@ class Engine:
                         
                     else:
                         #Se muestra el icono que conforma las posiciones dadas por el usuario.
-                        self.board.muestraIconos(p1F1, p1C1)
+                        self.board.muestraIconos(F1, C1)
                         #Se imprime el tablero X, con el icono
                         self.board.imprimirTableroX()
                         ok1 = True
@@ -162,10 +162,10 @@ class Engine:
                 #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
                 try:
                     #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
-                    p1F2 = int(input("Dime que fila quieres revelar: ")) -1
-                    p1C2 = int(input("Dime que columna quieres revelar: ")) -1
+                    F2 = int(input("Dime que fila quieres revelar: ")) -1
+                    C2 = int(input("Dime que columna quieres revelar: ")) -1
                     #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
-                    if(((p1F2 < 0 or p1F2 > len(self.board.getTablero())) or (p1C2 < 0 or p1C2 > len(self.board.getTablero()[0]))) or self.board.existeIcono(p1F2, p1C2)):
+                    if(((F2 < 0 or F2 > len(self.board.getTablero())) or (C2 < 0 or C2 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F2, C2)):
                         print("Datos incorrectos, vuelve a introducirlos")
                         ok2 = False
                         #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
@@ -173,7 +173,7 @@ class Engine:
                         
                     else:
                         #Se muestra el icono que conforma las posiciones dadas por el usuario.
-                        self.board.muestraIconos(p1F2, p1C2)
+                        self.board.muestraIconos(F2, C2)
                         #Se imprime el tablero X, con el icono
                         self.board.imprimirTableroX()
                         ok2 = True
@@ -182,7 +182,7 @@ class Engine:
                     print("Los datos no son correctos")
                 
             #Se comprueba que las anteriores 4 posiciones conforman una pareja
-            if(self.board.comprobarPareja(p1F1, p1C1, p1F2, p1C2) == True):
+            if(self.board.comprobarPareja(F1, C1, F2, C2) == True):
                 #Consigue pareja el jugador 1
                 if(cambioJugador == True):
                     print(f"¡Enhorabuena! {player1.getName()}, has conseguido una pareja. +2 puntos")
