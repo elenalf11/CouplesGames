@@ -70,6 +70,8 @@ class Engine:
                     #Creación de cpu
                     cpu = Player("cpu", True)
 
+                    #Aquí se preguntará la dificultad de la cpu
+
                     #Se comienza a jugar con el jugador y la cpu (player y cpu)
                     self.play_2(player, cpu)
 
@@ -79,7 +81,13 @@ class Engine:
                 #Opción 3: Modo CPU vs CPU
                 case 3 :
                     print("Has elegido el modo CPU vs CPU")
-                    print("Lo siento, este modo todavía está en desarrollo")
+
+                    cpu1 = Player("cpu1", True)
+                    cpu2 = Player("cpu2", True)
+
+                    #Aquí se preguntará la dificultad de la cpu
+
+                    self.play_3(cpu1, cpu2)
 
                     #Se finaliza el bucle del "menú"
                     check = True
@@ -446,4 +454,95 @@ class Engine:
                 else:
                     print(f"Eso si que no me lo esperaba! {player.getName()} y {cpu.getName()} habéis empatado con {player.getPoints()} puntos (El equivalente a {player.getParejas()} parejas) y {cpu.getPoints()} puntos (El equivalente a {cpu.getParejas()} parejas)")
                     #Se acaba el juego
+                    acabar = True
+    
+    def play_3 (self, cpu1:Player, cpu2:Player):
+        posiciones = []
+        contador = 0
+        acabar = False
+        cambioJugador = True
+
+        self.board.crearTableroX()
+        self.board.crearTableroIconos()
+
+        while(acabar == False):
+
+            if(cambioJugador == True):
+                print(f"{cpu1.getName()} es tu turno. Puntuación: {cpu1.getPoints()} puntos. Parejas: {cpu1.getParejas()} parejas")
+            else:
+                print(f"{cpu2.getName()} es tu turno. Puntuación: {cpu2.getPoints()} puntos. Parejas: {cpu2.getParejas()} parejas")
+            
+            self.board.imprimirTableroX()
+            ok = False
+
+            while(ok == False):
+                if(cambioJugador == True):
+                    cpu1Pos1 = cpu1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+                    cpu1Pos2 = cpu1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+
+                    if((self.board.existeIcono(cpu1Pos1[0], cpu1Pos1[1]) == True) or (self.board.existeIcono(cpu1Pos2[0], cpu1Pos2[1]) == True) or cpu1Pos1 == cpu1Pos2):
+                        ok = False
+                        continue
+                    else:
+                        print(f"La posición 1 es ({cpu1Pos1[0] + 1}, {cpu1Pos1[1] + 1})")
+                        print(f"La posición 2 es ({cpu1Pos2[0] + 1}, {cpu1Pos2[1] + 1})")
+
+                        self.board.muestraIconos(cpu1Pos1[0], cpu1Pos1[1])
+                        self.board.muestraIconos(cpu1Pos2[0], cpu1Pos2[1])
+
+                        self.board.imprimirTableroX()
+                        ok = True
+                else:
+                    cpu2Pos1 = cpu2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+                    cpu2Pos2 = cpu2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+
+                    if((self.board.existeIcono(cpu2Pos1[0], cpu2Pos1[1]) == True) or (self.board.existeIcono(cpu2Pos2[0], cpu2Pos2[1]) == True) or cpu2Pos1 == cpu2Pos2):
+                        ok = False
+                        continue
+                    else:
+                        print(f"La posición 1 es ({cpu2Pos1[0] + 1}, {cpu2Pos1[1] + 1})")
+                        print(f"La posición 2 es ({cpu2Pos2[0] + 1}, {cpu2Pos2[1] + 1})")
+
+                        self.board.muestraIconos(cpu2Pos1[0], cpu2Pos1[1])
+                        self.board.muestraIconos(cpu2Pos2[0], cpu2Pos2[1])
+
+                        self.board.imprimirTableroX()
+                        ok = True
+            
+            if(cambioJugador == True):
+                if(self.board.comprobarPareja(cpu1Pos1[0], cpu1Pos1[1], cpu1Pos2[0], cpu1Pos2[1]) == True):
+                    print(f"¡Enhorabuena {cpu1.getName()}! Has conseguido una pareja. +2 puntos")
+                    cpu1.sumaPuntos()
+                    cpu1.sumaParejas()
+                    contador += 1
+                    input()
+                    self.clear()
+                else:
+                    print(f"Lo siento {cpu1.getName()} no has conseguido pareja. Pierdes el turno")
+                    cambioJugador = False
+                    input()
+                    self.clear()
+            else:
+                if(self.board.comprobarPareja(cpu2Pos1[0], cpu2Pos1[1], cpu2Pos2[0], cpu2Pos2[1]) == True):
+                    print(f"¡Enhorabuena {cpu2.getName()}! Has conseguido una pareja. +2 puntos")
+                    cpu2.sumaPuntos()
+                    cpu2.sumaParejas()
+                    contador += 1
+                    input()
+                    self.clear()
+                else:
+                    print(f"Lo siento {cpu2.getName()} no has conseguido pareja. Pierdes el turno")
+                    cambioJugador = True
+                    input()
+                    self.clear()
+            
+            if(contador == self.board.getParejas()):
+                if(cpu1.getPoints() > cpu2.getPoints()):
+                    print(f"¡Enhorabuena {cpu1.getName()} has ganado la partida! Has conseguido un total de {cpu1.getPoints()} puntos (El equivalente a {cpu1.getParejas()} parejas). En cambio {cpu2.getName()} has conseguido solo {cpu2.getPoints()} (El equivalente a {cpu2.getParejas()} parejas)")
+                    acabar = True
+                elif (cpu2.getPoints() > cpu1.getPoints()):
+                    print(f"¡Enhorabuena {cpu2.getName()} has ganado la partida! Has conseguido un total de {cpu2.getPoints()} puntos (El equivalente a {cpu2.getParejas()} parejas). En cambio {cpu1.getName()} has conseguido solo {cpu1.getPoints()} puntos (El equivalente a {cpu1.getParejas()} parejas)")
+                    acabar = True
+                else:
+                    print(f"Vaya eso si que no me lo esperaba, {cpu1.getName()} y {cpu2.getName()} habéis empatado a puntos con {cpu1.getPoints()} puntos (El equivalente a {cpu1.getParejas()} parejas) y con {cpu2.getPoints()} puntos (El equivalente a {cpu2.getParejas()} parejas)")
                     acabar = True
