@@ -102,5 +102,12 @@ class Player:
         #Devuelve la coordenada completa
         return (posicion1, posicion2)
     
+    '''
+    Función esCPU
+
+    Comprueba si el jugador es una CPU o no.
+
+    Return: devuelve True si el jugador es una CPU, del caso contrario, devuelve False
+    '''
     def esCPU(self):
         return self.isCPU
