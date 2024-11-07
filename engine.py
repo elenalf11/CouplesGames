@@ -210,7 +210,7 @@ class Engine:
                         if((self.board.existeIcono(pos1cpu1[0], pos1cpu1[1])) == True or (self.board.existeIcono(pos2cpu1[0], pos2cpu1[1])) == True or pos1cpu1 == pos2cpu1):
                             ok2 = False
                             continue
-                        else:
+                        else:   
                             print(f"La posición 1 de {player1.getName()} es ({pos1cpu1[0] + 1}, {pos1cpu1[1] + 1})")
                             print(f"La posición 2 de {player1.getName()} es ({pos2cpu1[0] + 1}, {pos2cpu1[1] + 1})")
                     
@@ -249,7 +249,7 @@ class Engine:
                         pos1cpu2 = player2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
                         pos2cpu2 = player2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
 
-                        if((self.board.existeIcono(pos1cpu2[0], pos1cpu2[1])) == True or (self.board.existeIcono(pos2cpu2[0], pos2cpu2[1])) == True or pos1cpu2 == pos2cpu2):
+                        if((self.board.existeIcono(pos1cpu2[0], pos1cpu2[1])) == True or (self.board.existeIcono(pos2cpu2[0], pos2cpu2[1])) == True or (pos1cpu2 == pos2cpu2)):
                             ok2 = False
                             continue
                         else:
