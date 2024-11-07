@@ -95,9 +95,12 @@ class Player:
     '''
     def playCPU(self, filas, columnas):
         #Se genera la coordenada de las filas (posicion1, x)
-        posicion1 = random.randint(0, filas - 1)
+        posicion1 = random.randint(0, (filas - 1))
         #Se genera la coordenada de las columnas (x, posicion2)
-        posicion2 = random.randint(0, columnas - 1)
+        posicion2 = random.randint(0, (columnas - 1))
 
         #Devuelve la coordenada completa
         return (posicion1, posicion2)
+    
+    def esCPU(self):
+        return self.isCPU

@@ -47,11 +47,11 @@ class Engine:
 
                     #Creación de player1
                     n1 = input("Hola jugador 1, ¿cuál es tu nombre?: ")
-                    player1 = Player(n1)
+                    player1 = Player(n1, False)
 
                     #Cración de player2
                     n2 = input("Hola jugador 2, ¿cuál es tu nombre?: ")
-                    player2 = Player(n2)
+                    player2 = Player(n2, False)
 
                     #Se comienza a jugar con los dos jugadores (player1 y player2)
                     self.play(player1, player2)
@@ -73,7 +73,7 @@ class Engine:
                     #Aquí se preguntará la dificultad de la cpu
 
                     #Se comienza a jugar con el jugador y la cpu (player y cpu)
-                    self.play_2(player, cpu)
+                    self.play(player, cpu)
 
                     #Se finaliza el bucle del "menú"
                     check = True
@@ -87,7 +87,7 @@ class Engine:
 
                     #Aquí se preguntará la dificultad de la cpu
 
-                    self.play_3(cpu1, cpu2)
+                    self.play(cpu1, cpu2)
 
                     #Se finaliza el bucle del "menú"
                     check = True
@@ -123,6 +123,7 @@ class Engine:
     - player2: jugador 2
     '''
     def play(self, player1:Player, player2:Player):
+        posiciones = []
         #Variable para acabar el juego
         acabar = False
 
@@ -147,98 +148,206 @@ class Engine:
             ok1 = False
             #Este es el bucle para el primer icono
             while (ok1 == False):
-                #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
-                try:
-                    #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
-                    F1 = int(input("Dime que fila quieres revelar: ")) -1
-                    C1 = int(input("Dime que columna quieres revelar: ")) -1
-                    #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
-                    if(((F1 < 0 or F1 > len(self.board.getTablero())) or (C1 < 0 or C1 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F1, C1)):
-                        print("Datos incorrectos, vuelve a introducirlos")
-                        ok1 = False
-                        #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
-                        continue
-                        
-                    else:
-                        #Se muestra el icono que conforma las posiciones dadas por el usuario.
-                        self.board.muestraIconos(F1, C1)
-                        #Se imprime el tablero X, con el icono
-                        self.board.imprimirTableroX()
+                if(cambioJugador == True):
+                    if(player1.esCPU() == True):
                         ok1 = True
-                except:
-                    #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
-                    print("Los datos no son correctos")
-                
-            
+                    else:
+                        #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
+                        try:
+                            #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
+                            F1 = int(input("Dime que fila quieres revelar: ")) -1
+                            C1 = int(input("Dime que columna quieres revelar: ")) -1
+                            #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
+                            if(((F1 < 0 or F1 > len(self.board.getTablero())) or (C1 < 0 or C1 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F1, C1)):
+                                print("Datos incorrectos, vuelve a introducirlos")
+                                ok1 = False
+                                #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
+                                continue
+                        
+                            else:
+                                #Se muestra el icono que conforma las posiciones dadas por el usuario.
+                                self.board.muestraIconos(F1, C1)
+                                #Se imprime el tablero X, con el icono
+                                self.board.imprimirTableroX()
+                                ok1 = True
+                        except:
+                            #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
+                            print("Los datos no son correctos")
+                else:
+                    if(player2.esCPU() == True):
+                        ok1 = True
+                    else:
+                        #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
+                        try:
+                            #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
+                            F1 = int(input("Dime que fila quieres revelar: ")) -1
+                            C1 = int(input("Dime que columna quieres revelar: ")) -1
+                            #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
+                            if(((F1 < 0 or F1 > len(self.board.getTablero())) or (C1 < 0 or C1 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F1, C1)):
+                                print("Datos incorrectos, vuelve a introducirlos")
+                                ok1 = False
+                                #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
+                                continue
+                        
+                            else:
+                                #Se muestra el icono que conforma las posiciones dadas por el usuario.
+                                self.board.muestraIconos(F1, C1)
+                                #Se imprime el tablero X, con el icono
+                                self.board.imprimirTableroX()
+                                ok1 = True
+                        except:
+                            #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
+                            print("Los datos no son correctos")
+    
             ok2 = False
             #Este es el bucle para el segundo icono
             while(ok2 == False):
-                #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
-                try:
-                    #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
-                    F2 = int(input("Dime que fila quieres revelar: ")) -1
-                    C2 = int(input("Dime que columna quieres revelar: ")) -1
+                if(cambioJugador == True):
+                    if(player1.esCPU() == True):
+                        pos1cpu1 = player1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+                        pos2cpu1 = player1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
 
-                    #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
-                    if(((F2 < 0 or F2 > len(self.board.getTablero())) or (C2 < 0 or C2 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F2, C2)):
-                        print("Datos incorrectos, vuelve a introducirlos")
-                        ok2 = False
-                        #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
-                        continue
-                        
-                    else:
-                        #Se muestra el icono que conforma las posiciones dadas por el usuario.
-                        self.board.muestraIconos(F2, C2)
-                        #Se imprime el tablero X, con el icono
+                        if((self.board.existeIcono(pos1cpu1[0], pos1cpu1[1])) == True or (self.board.existeIcono(pos2cpu1[0], pos2cpu1[1])) == True or pos1cpu1 == pos2cpu1):
+                            ok2 = False
+                            continue
+                        else:
+                            print(f"La posición 1 de {player1.getName()} es ({pos1cpu1[0] + 1}, {pos1cpu1[1] + 1})")
+                            print(f"La posición 2 de {player1.getName()} es ({pos2cpu1[0] + 1}, {pos2cpu1[1] + 1})")
+                    
+                        self.board.muestraIconos(pos1cpu1[0], pos1cpu1[1])
+                        self.board.muestraIconos(pos2cpu1[0], pos2cpu1[1])
+
                         self.board.imprimirTableroX()
+
                         ok2 = True
-                except:
-                    #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
-                    print("Los datos no son correctos")
-                
-            #Se comprueba que las anteriores 4 posiciones conforman una pareja
-            if(self.board.comprobarPareja(F1, C1, F2, C2) == True):
-                #Consigue pareja el jugador 1
-                if(cambioJugador == True):
-                    print(f"¡Enhorabuena! {player1.getName()}, has conseguido una pareja. +2 puntos")
-                    #Se le suman 2 puntos a su cuenta personal
-                    player1.sumaPuntos()
-                    #Se le suma 1 pareja a su cuenta personal
-                    player1.sumaParejas()
-                    #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
-                    contador += 1
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
-                #Consigue pareja el jugador 2
+                    else:
+                        #Con el try puedo manejar mejor el control de errores, ya que este bloque de código tendía a fallar.
+                        try:
+                            #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
+                            F2 = int(input("Dime que fila quieres revelar: ")) -1
+                            C2 = int(input("Dime que columna quieres revelar: ")) -1
+
+                            #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
+                            if(((F2 < 0 or F2 > len(self.board.getTablero())) or (C2 < 0 or C2 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F2, C2)):
+                                print("Datos incorrectos, vuelve a introducirlos")
+                                ok2 = False
+                                #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
+                                continue
+                        
+                            else:
+                                #Se muestra el icono que conforma las posiciones dadas por el usuario.
+                                self.board.muestraIconos(F2, C2)
+                                #Se imprime el tablero X, con el icono
+                                self.board.imprimirTableroX()
+                                ok2 = True
+                                break
+                        except:
+                            #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
+                            print("Los datos no son correctos")
                 else:
-                    print(f"¡Enhorabuena! {player2.getName()}, has conseguido una pareja. +2 puntos")
-                    #Se le suman 2 puntos a su cuenta personal
-                    player2.sumaPuntos()
-                    #Se le suma 1 pareja a su cuenta personal
-                    player2.sumaParejas()
-                    #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
-                    contador += 1
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
+                    if(player2.esCPU() == True):
+                        pos1cpu2 = player2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+                        pos2cpu2 = player2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
+
+                        if((self.board.existeIcono(pos1cpu2[0], pos1cpu2[1])) == True or (self.board.existeIcono(pos2cpu2[0], pos2cpu2[1])) == True or pos1cpu2 == pos2cpu2):
+                            ok2 = False
+                            continue
+                        else:
+                            print(f"La posición 1 de {player2.getName()} es ({pos1cpu2[0] + 1}, {pos1cpu2[1] + 1})")
+                            print(f"La posición 2 de {player2.getName()} es ({pos2cpu2[0] + 1}, {pos2cpu2[1] + 1})")
+
+                            self.board.muestraIconos(pos1cpu2[0], pos1cpu2[1])
+                            self.board.muestraIconos(pos2cpu2[0], pos2cpu2[1])
+
+                            self.board.imprimirTableroX()
+
+                            ok2 = True
+                    else:
+                        try:
+                            #El -1, sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
+                            F2 = int(input("Dime que fila quieres revelar: ")) -1
+                            C2 = int(input("Dime que columna quieres revelar: ")) -1
+
+                            #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
+                            if(((F2 < 0 or F2 > len(self.board.getTablero())) or (C2 < 0 or C2 > len(self.board.getTablero()[0]))) or self.board.existeIcono(F2, C2)):
+                                print("Datos incorrectos, vuelve a introducirlos")
+                                ok2 = False
+                                #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen
+                                continue
+                        
+                            else:
+                                #Se muestra el icono que conforma las posiciones dadas por el usuario.
+                                self.board.muestraIconos(F2, C2)
+                                #Se imprime el tablero X, con el icono
+                                self.board.imprimirTableroX()
+                                ok2 = True
+                        except:
+                            #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
+                            print("Los datos no son correctos")
+            
+            if(cambioJugador == True):
+                if(player1.esCPU() == True):
+                    if(self.board.comprobarPareja(pos1cpu1[0], pos1cpu1[1], pos2cpu1[0], pos2cpu1[1]) == True):
+                        print(f"¡Enhorabuena {player1.getName()}!, has conseguido una pareja. +2 puntos")
+                        player1.sumaPuntos()
+                        player1.sumaParejas()
+                        contador += 1
+                        input()
+                        self.clear()
+                    else:
+                        print(f"Lo siento {player1.getName()}, no has conseguido la pareja. Pierdes tu turno")
+                        cambioJugador = False
+                        input()
+                        self.clear()
+                else:
+                    #Se comprueba que las anteriores 4 posiciones conforman una pareja
+                    if(self.board.comprobarPareja(F1, C1, F2, C2) == True):
+                        #Consigue pareja el jugador 1
+                        print(f"¡Enhorabuena {player1.getName()}!, has conseguido una pareja. +2 puntos")
+                        #Se le suman 2 puntos a su cuenta personal
+                        player1.sumaPuntos()
+                        #Se le suma 1 pareja a su cuenta personal
+                        player1.sumaParejas()
+                        #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
+                        contador += 1
+                        #"Limpia" la consola de código para que no se pueda hacer trampas
+                        input()
+                        self.clear()
+                    else:
+                        print(f"Lo siento {player1.getName()}, no has conseguido la pareja. Pierdes tu turno")
+                        #El turno pasa al jugador 2
+                        cambioJugador = False
+                        #"Limpia" la consola de código para que no se pueda hacer trampas
+                        input()
+                        self.clear()
             else:
-                #El jugador 1 no consigue pareja
-                if(cambioJugador == True):
-                    print(f"Lo siento {player1.getName()}, no has conseguido la pareja. Pierdes tu turno")
-                    #El turno pasa al jugador 2
-                    cambioJugador = False
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
-                #El jugador 2 no consigue pareja
+                if(player2.esCPU() == True):
+                    if(self.board.comprobarPareja(pos1cpu2[0], pos1cpu2[1], pos2cpu2[0], pos2cpu2[1]) == True):
+                        print(f"¡Enhorabuena {player2.getName()}!, has conseguido una pareja. +2 puntos")
+                        player2.sumaPuntos()
+                        player2.sumaParejas()
+                        contador += 1
+                        input()
+                        self.clear()
+                    else:
+                        print(f"Lo siento {player2.getName()}, no has conseguido pareja. Pierdes tu turno")
+                        cambioJugador = True
+                        input()
+                        self.clear()
                 else:
-                    print(f"Lo siento {player2.getName()}, no has conseguido la pareja. Pierdes tu turno")
-                    #El turno pasa al jugador 1
-                    cambioJugador = True
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
+                    #Se comprueban que las 4 anteriores posiciones conformen una pareja
+                    if(self.board.comprobarPareja(F1, C1, F2, C2) == True):
+                        print(f"¡Enhorabuena {player2.getName()}!, has conseguido una pareja. +2 puntos")
+                        player2.sumaPuntos()
+                        player2.sumaParejas()
+                        contador += 1
+                        input()
+                        self.clear()
+                    else:
+                        print(f"Lo siento {player2.getName()}, no has conseguido pareja. Pierdes el turno")
+                        cambioJugador = True
+                        input()
+                        self.clear()
 
             #Comprueba que se hayan descubierto todas las parejas del tablero
             if(contador == self.board.getParejas()):
@@ -258,291 +367,4 @@ class Engine:
                 else:
                     print(f"¡Eso si que no me lo esperaba! {player1.getName()} y {player2.getName()} habéis empatado con {player1.getPoints()} puntos (El equivalente a {player1.getParejas} parejas) y {player2.getPoints()} puntos (El equivalente a {player2.getParejas()} parejas)")
                     #Se finaliza el juego
-                    acabar = True
-    '''
-    Función play_2
-
-    Lleva a cabo todo el flujo del juego. Durante el modo jugador vs CPU
-
-    Parámetros:
-    - player: será el jugador real
-    - cpu: será la máquina
-    '''
-    def play_2(self, player:Player, cpu:Player):
-        #Este array se usará para próximas funcionalidades
-        posiciones = []
-
-        #Variable para acabar el juego
-        acabar = False
-
-        #Contador de parejas, para saber cuando acaba el juego
-        contador = 0
-
-        #Variable para ir cambiando de turno
-        cambioJugador = True
-        
-        #Creación de tableros
-        self.board.crearTableroX()
-        self.board.crearTableroIconos()
-
-        while(acabar == False):
-            
-            #Aquí se maneja el flujo del cambio de turnos
-            if(cambioJugador == True):
-                print(f"{player.getName()} es tu turno. Puntuación: {player.getPoints()} puntos. Parejas: {player.getParejas()} parejas")
-            else:
-                print(f"{cpu.getName()} es tu turno. Puntuación: {cpu.getPoints()} puntos. Parejas: {cpu.getParejas()} parejas")
-            
-            self.board.imprimirTableroX()
-            ok1 = False
-            #Este es el bucle para el primer icono. En este caso solo lo realiza el jugador real.
-            while(ok1 == False):
-                #Codigo para el jugador
-                if(cambioJugador == True):
-                    #Iniciamos un bloque try, por si ocurre un error poderlo manejar de una manera más sencilla
-                    try:
-                        #El -1 sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
-                        F1 = int(input("Dime que fila quieres revelar: ")) -1
-                        C1 = int(input("Dime que columna quieres revelar: ")) -1
-
-                        #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
-                        if((F1 < 0 or F1 > len(self.board.getTablero())) or (C1 < 0 or C1 > len(self.board.getTablero()[0])) or self.board.existeIcono(F1, C1)):
-                            print("Datos incorrectos, vuelve a intentarlo")
-                            ok1 = False
-                            #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen correctamente
-                            continue
-                        else:
-                            #Se muestra el icono que conforma las posiciones dadas por el usuario.
-                            self.board.muestraIconos(F1, C1)
-                            #Se imprime el tablero X, con el icono
-                            self.board.imprimirTableroX()
-                            ok1 = True
-                    except:
-                        #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
-                        print("¡Ups! Ha ocurrido un error")
-                else:
-                    #Este bloque se pone porque la CPU solo va a intervenir en un solo bucle, ya que dará coordenadas completas
-                    ok1 = True
-            
-            ok2 = False
-            #Este es el bucle para el segundo icono del jugador. Y también es el bucle en el que la cpu introduce sus valores
-            while(ok2 == False):
-                #Codigo para el jugador
-                if(cambioJugador == True):
-                    #Iniciamos un bloque try, por si ocurre un error poderlo manejar de una manera más sencilla
-                    try:
-                        #El -1 sirve para que el usuario pueda introducir los valores sin tener en cuenta el 0 del tablero, es decir, con números reales (1 -> longitud tablero)
-                        F2 = int(input("Dime que fila quieres revelar: ")) -1
-                        C2 = int(input("Dime que columnas quieres revelar: ")) -1
-
-                        #Comprobamos que los datos sean correctos, es decir que sea mayor que 0, que no supere la longitud del tablero y si existe un icono o no.
-                        if((F2 < 0 or F2 > len(self.board.getTablero())) or (C2 < 0 or C2 > len(self.board.getTablero()[0])) or self.board.existeIcono(F2, C2)):
-                            print("Datos incorrectos, vuelve a intentarlo")
-                            ok2 = False
-                            #El continue hace que el usuario vuelva a introducir los datos correctamente. Esto es muy útil ya que así te aseguras que todos los bucles funcionen correctamente
-                            continue
-                        else:
-                            #Se muestra el icono que conforma las posiciones dadas por el usuario.
-                            self.board.muestraIconos(F2, C2)
-                            #Se imprime el tablero X, con el icono
-                            self.board.imprimirTableroX()
-                            ok2 = True
-                    except:
-                        #Si los datos introducidos anteriormente en el bloque try lanzan una excepción, esta la captura e imprime este mensaje por consola
-                        print("¡Ups! Ha ocurrido un error")
-                   
-                    
-                #Codigo para la cpu
-                else:
-                    #La cpu genera una coordenada completa, esta es la coordenada del primer icono
-                    cpuPos1 = cpu.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
-                    #Esta es la corrdenada del segundo icono
-                    cpuPos2 = cpu.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
-                    
-                    #Se comprueba que las coordenadas introducidas no contengan iconos ni que sean las dos coordenadas iguales
-                    if((self.board.existeIcono(cpuPos1[0], cpuPos1[1]) == True) or (self.board.existeIcono(cpuPos2[0], cpuPos2[1]) == True) or cpuPos1 == cpuPos2):
-                        ok2 = False
-                        #El continue hace que la cpu genere nuevas coordenadas ya que las anteriores eran incorrectas
-                        continue
-                    else:
-                        #Se muestra un mensaje para poder ver cuáles son las coordenadas de la cpu
-                        print(f"La posicion 1 de {cpu.getName()} es ({cpuPos1[0] + 1}, {cpuPos1[1] + 1})")
-                        print(f"La posición 2 de {cpu.getName()} es ({cpuPos2[0] + 1}, {cpuPos2[1] + 1})")
-
-                        #Se muestra el primer icono
-                        self.board.muestraIconos(cpuPos1[0], cpuPos1[1])
-                        #Se muestra el segundo icono
-                        self.board.muestraIconos(cpuPos2[0], cpuPos2[1])
-                        #Se imprime el tablero X, con los iconos
-                        self.board.imprimirTableroX()
-                        ok2 = True
-
-            #Codigo para el jugador
-            if(cambioJugador == True):
-
-                #Comprueba que las posiciones que ha introducido el jugador conformen una pareja
-                if(self.board.comprobarPareja(F1, C1, F2, C2) == True):
-
-                    print(f"¡Enhorabuena {player.getName()}, has conseguido una pareja! +2 puntos")
-
-                    #Se suman 2 puntos a su cuenta personal
-                    player.sumaPuntos()
-                    #Se le suma 1 pareja a su cuenta personal
-                    player.sumaParejas()
-                    #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
-                    contador += 1
-
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
-                #El jugador no consigue pareja
-                else:
-
-                    print(f"Lo siento {player.getName()}, no has conseguido pareja. Pierdes el turno")
-
-                    #Cambia de turno a la cpu
-                    cambioJugador = False
-
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
-            #Código para la cpu
-            else:
-
-                #Comprueba que las posiciones que ha generado la cpu conformen una pareja
-                if(self.board.comprobarPareja(cpuPos1[0], cpuPos1[1], cpuPos2[0], cpuPos2[1]) == True):
-
-                    print(f"¡Enhorabuena {cpu.getName()}, has conseguido una pareja! +2 puntos")
-
-                    #Se suman 2 puntos a su cuenta personal
-                    cpu.sumaPuntos()
-                    #Se le suma 1 pareja a su cuenta personal
-                    cpu.sumaParejas()
-                    #Este contador es para saber cuando ya se hayan acertado todas las parejas, por lo tanto al descubrir una pareja suma 1.
-                    contador += 1
-
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
-                #La cpu no consigue pareja
-                else:
-                    print(f"Lo siento {cpu.getName()}, no has conseguido pareja. Pierdes el turno")
-
-                    #Cambia de turno al jugador
-                    cambioJugador = True
-
-                    #"Limpia" la consola de código para que no se pueda hacer trampas
-                    input()
-                    self.clear()
-            
-            #Comprueba que se hayan descubierto todas las parejas del tablero
-            if(contador == self.board.getParejas()):
-
-                #El jugador real consigue más puntos que la cpu. Gana el jugador real
-                if(player.getPoints() > cpu.getPoints()):
-                    print(f"¡Enhorabuena {player.getName()}! Has ganado la partida. Has conseguido un total de {player.getPoints()} puntos (El equivalente a {player.getParejas()} parejas). En cambio, {cpu.getName()} ha conseguido solo {cpu.getPoints()} puntos (El equivalente a {cpu.getParejas()} parejas)")
-                    #Se acaba el juego
-                    acabar = True
-                
-                #La cpu consigue más puntos que el jugador real. Gana la cpu
-                elif(cpu.getPoints() > player.getPoints()):
-                    print(f"¡Enhorabuena {cpu.getName()}! Has ganado la partida. Has conseguido un total de {cpu.getPoints()} puntos (El equivalente a {cpu.getParejas()} parejas). En cambio, {player.getName()} ha conseguido solo {player.getPoints()} puntos (El equivalente a {player.getParejas()} parejas)")
-                    #Se acaba el juego
-                    acabar = True
-                
-                #La cpu y el jugador real consiguen los mismos puntos. Empatan la cpu y el juador real
-                else:
-                    print(f"Eso si que no me lo esperaba! {player.getName()} y {cpu.getName()} habéis empatado con {player.getPoints()} puntos (El equivalente a {player.getParejas()} parejas) y {cpu.getPoints()} puntos (El equivalente a {cpu.getParejas()} parejas)")
-                    #Se acaba el juego
-                    acabar = True
-    
-    def play_3 (self, cpu1:Player, cpu2:Player):
-        posiciones = []
-        contador = 0
-        acabar = False
-        cambioJugador = True
-
-        self.board.crearTableroX()
-        self.board.crearTableroIconos()
-
-        while(acabar == False):
-
-            if(cambioJugador == True):
-                print(f"{cpu1.getName()} es tu turno. Puntuación: {cpu1.getPoints()} puntos. Parejas: {cpu1.getParejas()} parejas")
-            else:
-                print(f"{cpu2.getName()} es tu turno. Puntuación: {cpu2.getPoints()} puntos. Parejas: {cpu2.getParejas()} parejas")
-            
-            self.board.imprimirTableroX()
-            ok = False
-
-            while(ok == False):
-                if(cambioJugador == True):
-                    cpu1Pos1 = cpu1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
-                    cpu1Pos2 = cpu1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
-
-                    if((self.board.existeIcono(cpu1Pos1[0], cpu1Pos1[1]) == True) or (self.board.existeIcono(cpu1Pos2[0], cpu1Pos2[1]) == True) or cpu1Pos1 == cpu1Pos2):
-                        ok = False
-                        continue
-                    else:
-                        print(f"La posición 1 es ({cpu1Pos1[0] + 1}, {cpu1Pos1[1] + 1})")
-                        print(f"La posición 2 es ({cpu1Pos2[0] + 1}, {cpu1Pos2[1] + 1})")
-
-                        self.board.muestraIconos(cpu1Pos1[0], cpu1Pos1[1])
-                        self.board.muestraIconos(cpu1Pos2[0], cpu1Pos2[1])
-
-                        self.board.imprimirTableroX()
-                        ok = True
-                else:
-                    cpu2Pos1 = cpu2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
-                    cpu2Pos2 = cpu2.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
-
-                    if((self.board.existeIcono(cpu2Pos1[0], cpu2Pos1[1]) == True) or (self.board.existeIcono(cpu2Pos2[0], cpu2Pos2[1]) == True) or cpu2Pos1 == cpu2Pos2):
-                        ok = False
-                        continue
-                    else:
-                        print(f"La posición 1 es ({cpu2Pos1[0] + 1}, {cpu2Pos1[1] + 1})")
-                        print(f"La posición 2 es ({cpu2Pos2[0] + 1}, {cpu2Pos2[1] + 1})")
-
-                        self.board.muestraIconos(cpu2Pos1[0], cpu2Pos1[1])
-                        self.board.muestraIconos(cpu2Pos2[0], cpu2Pos2[1])
-
-                        self.board.imprimirTableroX()
-                        ok = True
-            
-            if(cambioJugador == True):
-                if(self.board.comprobarPareja(cpu1Pos1[0], cpu1Pos1[1], cpu1Pos2[0], cpu1Pos2[1]) == True):
-                    print(f"¡Enhorabuena {cpu1.getName()}! Has conseguido una pareja. +2 puntos")
-                    cpu1.sumaPuntos()
-                    cpu1.sumaParejas()
-                    contador += 1
-                    input()
-                    self.clear()
-                else:
-                    print(f"Lo siento {cpu1.getName()} no has conseguido pareja. Pierdes el turno")
-                    cambioJugador = False
-                    input()
-                    self.clear()
-            else:
-                if(self.board.comprobarPareja(cpu2Pos1[0], cpu2Pos1[1], cpu2Pos2[0], cpu2Pos2[1]) == True):
-                    print(f"¡Enhorabuena {cpu2.getName()}! Has conseguido una pareja. +2 puntos")
-                    cpu2.sumaPuntos()
-                    cpu2.sumaParejas()
-                    contador += 1
-                    input()
-                    self.clear()
-                else:
-                    print(f"Lo siento {cpu2.getName()} no has conseguido pareja. Pierdes el turno")
-                    cambioJugador = True
-                    input()
-                    self.clear()
-            
-            if(contador == self.board.getParejas()):
-                if(cpu1.getPoints() > cpu2.getPoints()):
-                    print(f"¡Enhorabuena {cpu1.getName()} has ganado la partida! Has conseguido un total de {cpu1.getPoints()} puntos (El equivalente a {cpu1.getParejas()} parejas). En cambio {cpu2.getName()} has conseguido solo {cpu2.getPoints()} (El equivalente a {cpu2.getParejas()} parejas)")
-                    acabar = True
-                elif (cpu2.getPoints() > cpu1.getPoints()):
-                    print(f"¡Enhorabuena {cpu2.getName()} has ganado la partida! Has conseguido un total de {cpu2.getPoints()} puntos (El equivalente a {cpu2.getParejas()} parejas). En cambio {cpu1.getName()} has conseguido solo {cpu1.getPoints()} puntos (El equivalente a {cpu1.getParejas()} parejas)")
-                    acabar = True
-                else:
-                    print(f"Vaya eso si que no me lo esperaba, {cpu1.getName()} y {cpu2.getName()} habéis empatado a puntos con {cpu1.getPoints()} puntos (El equivalente a {cpu1.getParejas()} parejas) y con {cpu2.getPoints()} puntos (El equivalente a {cpu2.getParejas()} parejas)")
                     acabar = True
