@@ -10,7 +10,6 @@ En este repositorio se encuentra el conocido juego de encontrar las parejas en u
 ---
 
 ## 🧩 Composición
----
 Está compuesto por 4 clases:
 
 - 🎲 **Board**: Clase que representa el tablero
