@@ -43,3 +43,7 @@ maximizar sus posibilidades de éxito.
 ### 🤖🤖 CPU vs CPU
 Dos instancias de la máquina juegan entre sí, tomando
 decisiones basadas en la memoria de cartas vistas, sin intervención humana.
+
+---
+## Ejemplo de juego
+![Ejemplo de funcionamiento](media/ejemplo_juego.png)
