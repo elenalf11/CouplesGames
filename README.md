@@ -2,8 +2,6 @@
 
 *Creado por Elena López Félix, 2º CFGS DAM 📝*
 
----
-
 ## 🧩 Composición
 Está compuesto por 4 clases:
 
