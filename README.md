@@ -30,3 +30,16 @@ hasta que se descubren todas las parejas.
 1. Persona vs Persona
 2. Persona vs CPU
 3. CPU vs CPU
+
+### Persona vs Persona
+Dos jugadores compiten por encontrar el mayor número de
+parejas. Alternan turnos y el ganador es quien descubra más parejas.
+
+### Persona vs CPU
+Un jugador humano compite contra una máquina. La máquina
+simula una inteligencia artificial básica, recordando las cartas que ha visto para
+maximizar sus posibilidades de éxito.
+
+### CPU vs CPU
+Dos instancias de la máquina juegan entre sí, tomando
+decisiones basadas en la memoria de cartas vistas, sin intervención humana.
