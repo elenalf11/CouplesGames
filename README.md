@@ -1,9 +1,4 @@
 # **CouplesGames 🎴**
----
-
-En este repositorio se encuentra el conocido juego de encontrar las parejas en un tablero. Es un juego muy útil para mejorar la memoria.
-
----
 
 *Creado por Elena López Félix, 2º CFGS DAM 📝*
 
