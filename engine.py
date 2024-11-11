@@ -10,6 +10,7 @@ Importaciones:
 '''
 from player import Player
 from board import Board
+import time
 
 class Engine:
 
@@ -338,7 +339,7 @@ class Engine:
                         #Suma 1 al contador para controlar cuando acaba el juego
                         contador += 1
                         #"Limpia" la consola de código para que no se pueda hacer trampas
-                        input()
+                        time.sleep(1.5)
                         self.clear()
                     #El player1 en modo CPU no ha hecho pareja
                     else:
@@ -346,7 +347,7 @@ class Engine:
                         #Pasa el turno al player2
                         cambioJugador = False
                         #"Limpia" la consola de código para que no se pueda hacer trampas
-                        input()
+                        time.sleep(1.5)
                         self.clear()
                 #Comprueba que el player1 es un jugador real
                 else:
@@ -369,7 +370,7 @@ class Engine:
                         #El turno pasa al jugador 2
                         cambioJugador = False
                         #"Limpia" la consola de código para que no se pueda hacer trampas
-                        input()
+                        time.sleep(1.5)
                         self.clear()
             #Comprueba que player2 está jugando
             else:
@@ -386,7 +387,7 @@ class Engine:
                         #Suma 1 al contador para controlar cuando acaba el juego
                         contador += 1
                         #"Limpia" la consola de código para que no se pueda hacer trampas
-                        input()
+                        time.sleep(1.5)
                         self.clear()
                     #El player2 en modo CPU no ha hecho pareja
                     else:
@@ -394,7 +395,7 @@ class Engine:
                         #Pasa el turno al player1
                         cambioJugador = True
                         #"Limpia" la consola de código para que no se pueda hacer trampas
-                        input()
+                        time.sleep(1.5)
                         self.clear()
 
                 #Comprueba que el player2 es un jugador real
