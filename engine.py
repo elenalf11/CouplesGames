@@ -68,24 +68,12 @@ class Engine:
                     n = input("Hola jugador, ¿cuál es tu nombre?: ")
                     player = Player(n, False)
 
-                    ok = False
-                    while (ok == False):
-                        print("1 -- Dificultad fácil \n 2 -- Dificultad intermedia \n 3 -- Dificultad Difícil \n 4 -- Dificultad experto")
-                        dificultad = int(input("Dime tu opción, para la dificultad de la CPU: "))
-                        if((dificultad < 0) or (dificultad > 4) or (dificultad != int())):
-                            ok = False
-                            print("Opción incorrecta, vuelve a intentarlo")
-                            continue
-                        else:
-                            ok = True
 
                     #Creación de cpu
                     cpu = Player("cpu", True)
 
-                    #Aquí se preguntará la dificultad de la cpu
-
                     #Se comienza a jugar con el jugador y la cpu (player y cpu)
-                    self.play(player, cpu, dificultad)
+                    self.play(player, cpu)
 
                     #Se finaliza el bucle del "menú"
                     check = True
@@ -97,18 +85,8 @@ class Engine:
                     cpu1 = Player("cpu1", True)
                     cpu2 = Player("cpu2", True)
 
-                    ok = False
-                    while (ok == False):
-                        print("1 -- Dificultad fácil \n 2 -- Dificultad intermedia \n 3 -- Dificultad Difícil \n 4 -- Dificultad experto")
-                        dificultad = int(input("Dime tu opción, para la dificultad de la CPU: "))
-                        if((dificultad < 0) or (dificultad > 4) or (dificultad != int())):
-                            ok = False
-                            print("Opción incorrecta, vuelve a intentarlo")
-                            continue
-                        else:
-                            ok = True
 
-                    self.play(cpu1, cpu2, dificultad)
+                    self.play(cpu1, cpu2)
 
                     #Se finaliza el bucle del "menú"
                     check = True
@@ -143,7 +121,7 @@ class Engine:
     - player1: jugador 1
     - player2: jugador 2
     '''
-    def play(self, player1:Player, player2:Player, dificultad):
+    def play(self, player1:Player, player2:Player):
         posiciones = []
         #Variable para acabar el juego
         acabar = False
@@ -240,9 +218,9 @@ class Engine:
                     #Comprueba si el player1 es una CPU
                     if(player1.esCPU() == True):
                         #Da las coordenadas del primer icono 
-                        pos1cpu1 = player1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]), dificultad)
+                        pos1cpu1 = player1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
                         #Da las coordenadas del segun icono
-                        pos2cpu1 = player1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]), dificultad)
+                        pos2cpu1 = player1.playCPU(len(self.board.getTablero()), len(self.board.getTablero()[0]))
 
                         #Comprueba que las coordenadas son válidas
                         if((self.board.existeIcono(pos1cpu1[0], pos1cpu1[1])) == True or (self.board.existeIcono(pos2cpu1[0], pos2cpu1[1])) == True or pos1cpu1 == pos2cpu1):

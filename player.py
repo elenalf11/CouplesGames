@@ -7,6 +7,7 @@ Importaciones:
 - random: será utilizado para la jugabilidad de la CPU
 '''
 import random
+from board import Board
 
 class Player:
 
@@ -93,32 +94,15 @@ class Player:
 
     Return: Devuelve una tupla con la coordenada de un icono
     '''
-    def playCPU(self, filas, columnas, dificultad):
-        match dificultad:
-            #Modo fácil
-            case 1:
-                #Se genera la coordenada de las filas (posicion1, x)
-                posicion1 = random.randint(0, (filas - 1))
-                #Se genera la coordenada de las columnas (x, posicion2)
-                posicion2 = random.randint(0, (columnas - 1))
+    def playCPU(self, filas, columnas):
+        #Se genera la coordenada de las filas (posicion1, x)
+        posicion1 = random.randint(0, (filas - 1))
+        #Se genera la coordenada de las columnas (x, posicion2)
+        posicion2 = random.randint(0, (columnas - 1))
 
-                #Devuelve la coordenada completa
-                return (posicion1, posicion2)
-            #Modo intermedio
-            case 2:
-                print("Este es el modo intermedio")
-                #Memoria: 2 últimas cartas
-                #Si en el turno actual toma una carta y comprueba que hace pareja con una de su memoria, la segunda carta la toma de la memoria
-                #Al hacer pareja se elimina la carta de la memoria y vuelve a comenzar
-            #Modo difícil
-            case 3:
-                print("Este es el modo difícil")
-                #Memoria: Recuerda todas las cartas que ha visto
-                #Si hace pareja con alguna carta de su memoria las elimina
-            #Modo experto
-            case 4:
-                print("Este es el modo experto")
-                #Memoria: Recuerda todas las cartas (las que ha jugado y las del oponente)
+        #Devuelve la coordenada completa
+        return (posicion1, posicion2)
+           
 
     '''
     Función esCPU
