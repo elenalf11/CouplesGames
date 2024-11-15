@@ -55,7 +55,7 @@ class Engine:
                     player2 = Player(n2, False)
 
                     #Se comienza a jugar con los dos jugadores (player1 y player2)
-                    self.play(player1, player2, 0)
+                    self.play(player1, player2)
 
                     #Se finaliza el bucle del "menú"
                     check = True
